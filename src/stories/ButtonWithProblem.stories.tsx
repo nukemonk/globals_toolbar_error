@@ -3,7 +3,7 @@ import { Box, Button } from "@mui/material";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Example/Button",
+  title: "Example/Button with problem",
   component: Button,
   tags: ["autodocs"],
 } satisfies Meta<typeof Button>;

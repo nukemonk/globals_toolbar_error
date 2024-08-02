@@ -1,6 +1,7 @@
-import React from 'react'
-import { createTheme, ThemeProvider } from "@mui/material";
+import React from "react";
+import { Button, createTheme, Stack, ThemeProvider } from "@mui/material";
 import type { Preview } from "@storybook/react";
+import { useGlobals } from "@storybook/preview-api";
 
 const light = createTheme({
   palette: {
@@ -21,21 +22,23 @@ const themes = {
 
 const preview: Preview = {
   decorators: [
-    (Story, { globals }) => {
-      // let DocsThemeWrapper: any = Fragment;
-      // const docsThemeWrapperProps = {};
-      // const CustomThemeProvider = title.startsWith('Components/Pro/')
-      //   ? ThemeProviderPro
-      //   : ThemeProvider;
-      // // All stories that are page only (no Canvas/Story components) get "Page" as story name.
-      // // if (context.story === 'Page') {
-      // //   DocsThemeWrapper = MuiThemeProvider;
-      // //   docsThemeWrapperProps.theme = generateDocsTheme;
-      // // }
+    (Story) => {
+      const [globals, setGlobals] = useGlobals();
 
       return (
         <ThemeProvider theme={themes[globals.muiTheme]}>
-          <Story />
+          <Stack spacing={4}>
+            <Button
+              onClick={() => {
+                setGlobals({
+                  muiTheme: globals.muiTheme === "dark" ? "light" : "dark",
+                });
+              }}
+            >
+              Change theme from here without issue
+            </Button>
+            <Story />
+          </Stack>
         </ThemeProvider>
       );
     },
@@ -55,7 +58,7 @@ const preview: Preview = {
       description: "Global theme for components",
       defaultValue: "light",
       toolbar: {
-        title: "Theme",
+        title: "Change theme here with issue",
         items: [
           { value: "dark", title: "🌚 dark theme" },
           { value: "light", title: "🌝 light theme" },
